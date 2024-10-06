@@ -1,4 +1,23 @@
+using Application.Interfaces;
+using Application.Services;
+using Data_Access.Contexts;
+using Data_Access.Data;
+using Data_Access.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// add Contexts
+builder.Services.AddDbContext<ApplicationContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
+);
+
+// Dependancy Injection
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+
+builder.Services.AddScoped<IPatientService, PatientService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
