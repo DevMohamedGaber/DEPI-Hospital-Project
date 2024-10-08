@@ -2,8 +2,8 @@
 
 namespace DataAccess.Contexts
 {
-    public class IdentityContext : DbContext
-    {
+    //public class IdentityContext : DbContext
+    //{
 
-    }
+    //}
 }

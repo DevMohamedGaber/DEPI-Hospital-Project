@@ -1,12 +1,11 @@
 ﻿using DataAccess.Abstacts;
 using Shared.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Entities
 {
-    public class Doctor : User
+    public class Doctor : Staff
     {
-        public string Password { get; set; }
-        public decimal Salary { get; set; } = decimal.Zero;
         public Speciality Speciality { get; set; }
 
         public int ShiftId { get; set; } = 0;

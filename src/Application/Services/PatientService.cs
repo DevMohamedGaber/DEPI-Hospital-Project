@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using DataAccess.Entities;
+using DataAccess.Interfaces;
 
 namespace Application.Services
 {
@@ -10,5 +12,10 @@ namespace Application.Services
             this.repository = repository;
         }
 
+        public bool AddNewPatient(Patient patient)
+        {
+            repository.Create(patient);
+            return true;
+        }
     }
 }

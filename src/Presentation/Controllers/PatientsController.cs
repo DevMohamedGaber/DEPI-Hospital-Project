@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEPI_Hospital_Project.Controllers
@@ -11,9 +12,19 @@ namespace DEPI_Hospital_Project.Controllers
             this.Service = Service;
         }
 
-        public IActionResult Index()
+        public IActionResult AddPatient()
         {
-            return View();
+            Service.AddNewPatient(new Patient
+            {
+                firstName = "Mohamed",
+                lastName = "gaber"
+            });
+            return Ok();
         }
+
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
     }
 }

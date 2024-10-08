@@ -1,4 +1,4 @@
-﻿using Application.Enums;
+﻿using Shared.Enums;
 
 namespace DataAccess.Abstacts
 {
@@ -6,9 +6,10 @@ namespace DataAccess.Abstacts
     {
         public uint id { get; set; }
         public string firstName { get; set; }
-        public uint lastName { get; set; }
-        public Gender SocialNumber { get; set; }
-        public string Address { get; set; } = null;
-        public string PhoneNumber { get; set; } = null;
+        public string lastName { get; set; }
+        public string? SocialNumber { get; set; }
+        public Gender gender { get; set; } = Gender.Male;
+        public string? Address { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }

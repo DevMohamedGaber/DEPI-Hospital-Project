@@ -2,8 +2,8 @@
 
 namespace DataAccess.Entities
 {
-    public class Nurse : User
+    public class Nurse : Staff
     {
-        public string Password { get; set; }
+
     }
 }

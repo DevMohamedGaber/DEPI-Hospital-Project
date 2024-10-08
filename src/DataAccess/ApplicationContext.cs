@@ -5,6 +5,7 @@ namespace DataAccess.Contexts
 {
     public class ApplicationContext : DbContext
     {
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) {}
         // Actors
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Admin> Admins { get; set; }
