@@ -9,11 +9,6 @@ namespace DataAccess.Data
     {
         public UserRepository(ApplicationContext context) : base(context) { }
 
-        public T GetById(int id)
-        {
-            var user = context.Set<T>().Where(x => x.id == id) as T;
-            return user;
-        }
 
         public T GetByName(string firstName, string lastName)
         {
