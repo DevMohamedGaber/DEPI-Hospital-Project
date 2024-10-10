@@ -2,9 +2,8 @@
 
 namespace DataAccess.Abstacts
 {
-    public abstract class User
+    public abstract class User : BaseEntity
     {
-        public uint id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string? SocialNumber { get; set; }
