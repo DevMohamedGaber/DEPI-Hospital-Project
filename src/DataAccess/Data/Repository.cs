@@ -7,13 +7,14 @@ namespace DataAccess.Data
     {
         protected readonly ApplicationContext context;
 
-        public IQueryable<T> GetAll()
-        {
-            return context.Set<T>();
-        }
         public Repository(ApplicationContext context)
         {
             this.context = context;
+        }
+
+        public IQueryable<T> GetAll()
+        {
+            return context.Set<T>();
         }
         public void Create(T entity)
         {

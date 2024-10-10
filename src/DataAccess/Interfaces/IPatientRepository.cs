@@ -2,9 +2,8 @@
 
 namespace DataAccess.Interfaces
 {
-    public interface IPatientRepository : IRepository<Patient>
+    public interface IPatientRepository : IUserRepository<Patient>
     {
-        public Patient GetById(int id);
-        public Patient GetByName(string firstName, string lastName);
+
     }
 }
