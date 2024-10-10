@@ -10,12 +10,14 @@ namespace DataAccess.Data
 
         public Patient GetById(int id)
         {
-            throw new NotImplementedException();
+            var patient = context.Patients.Where(x => x.id == id) as Patient;
+            return patient;
         }
 
         public Patient GetByName(string firstName, string lastName)
         {
-            throw new NotImplementedException();
+            var patient = context.Patients.Where(x => x.firstName == firstName && x.lastName == lastName) as Patient;
+            return patient;
         }
     }
 }
