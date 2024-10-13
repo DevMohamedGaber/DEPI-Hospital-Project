@@ -1,10 +1,11 @@
 ﻿using DataAccess.Abstacts;
 using DataAccess.Contexts;
 using DataAccess.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace DataAccess.Data
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : IdentityUser<uint>
     {
         protected readonly ApplicationContext context;
 
@@ -19,7 +20,7 @@ namespace DataAccess.Data
         }
         public T GetById(int id)
         {
-            var entity = context.Set<T>().Where(x => x.id == id) as T;
+            var entity = context.Set<T>().Where(x => x.Id == id) as T;
             return entity;
         }
         public void Create(T entity)
