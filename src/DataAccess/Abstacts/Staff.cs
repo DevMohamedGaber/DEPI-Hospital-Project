@@ -2,7 +2,7 @@
 
 namespace DataAccess.Abstacts
 {
-    public abstract class Staff : User
+    public  class Staff : User
     {
         public string Password { get; set; }
         [Column(TypeName = "decimal(5, 2)")]

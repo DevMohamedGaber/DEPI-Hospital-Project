@@ -38,7 +38,7 @@ namespace Application.Services
 
         public bool UpdatePatient(Patient patient)
         {
-            var p = repository.GetById((int)patient.id);
+            var p = repository.GetById((int)patient.Id);
             repository.Update(patient);
             return true;
         }
