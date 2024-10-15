@@ -2,7 +2,7 @@
 
 namespace DataAccess.Interfaces
 {
-    public interface IPatientRepository : IUserRepository<Patient>
+    public interface IAdminRepository : IUserRepository<Admin>
     {
 
     }

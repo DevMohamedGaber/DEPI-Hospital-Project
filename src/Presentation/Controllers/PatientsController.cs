@@ -1,9 +1,11 @@
 ﻿using Application.Interfaces;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEPI_Hospital_Project.Controllers
 {
+    [Authorize(Roles ="PATIENT")]
     public class PatientsController : Controller
     {
         private IPatientService Service;
