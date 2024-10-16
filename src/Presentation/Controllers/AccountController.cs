@@ -1,26 +1,16 @@
-﻿using DataAccess.Abstacts;
-using DataAccess.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.ViewModels;
-using System.Linq.Expressions;
+using Shared.DTO;
 
 namespace Presentation.Controllers
 {
     public class AccountController : Controller
     {
-        #region Services
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<IdentityRole<uint>> _roleManager;
-
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<uint>> roleManager)
+        private IAuthenticationService _service;
+        public AccountController(IAuthenticationService service)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
+            this._service = service;
         }
-        #endregion
 
         #region Sign Up
         [HttpGet]
@@ -36,67 +26,15 @@ namespace Presentation.Controllers
             {
                 return BadRequest();
             }
-            var user = await _userManager.FindByNameAsync(signUpViewModel.FirstName + "" + signUpViewModel.LastName);
-            if (user == null)
+
+            var errors = await _service.SignUp(signUpViewModel);
+            if (errors == null || errors.Count() == 0)
             {
-                string role = null;
-                user = new User
-                {
-                    firstName = signUpViewModel.FirstName,
-                    lastName = signUpViewModel.LastName,
-                    UserName = signUpViewModel.FirstName + "" + signUpViewModel.LastName,
-                    Email = signUpViewModel.Email,
-                    PhoneNumber = signUpViewModel.PhoneNumber,
-                    Address = signUpViewModel.Address,
-                    gender = signUpViewModel.Gender,
-                    IsAgree = signUpViewModel.IsAgree,
-
-                };
-                switch (signUpViewModel.Role)
-                {
-                    case 1:
-                        var Admin = (Admin)user;
-                        user = Admin;
-                        role = "ADMIN";
-                        break;
-                    case 2:
-                        var Doctor = (Doctor)user;
-                        user = Doctor;
-                        role = "DOCTOR";
-                        break;
-                    case 3:
-                        var Nurse = (Nurse)user;
-                        user = Nurse;
-                        role = "Nurse";
-                        break;
-                    case 4:
-                        var Patient = (Patient)user;
-                        user = Patient;
-                        role = "Pastient";
-                        break;
-                }
-
-                var result = await _userManager.CreateAsync(user, signUpViewModel.Password);
-
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, role);
-                    return RedirectToAction(nameof(SignIn));
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
+                InjectErrors(errors);
+                return View(signUpViewModel);
             }
-            else
-            {
-                ModelState.AddModelError(nameof(signUpViewModel.FirstName), "this First Name is already used in another Account");
-                ModelState.AddModelError(nameof(signUpViewModel.LastName), "this Last Name is already used in another Account");
-            }
-            return View(signUpViewModel);
+
+            return RedirectToAction(nameof(SignIn));
         }
         #endregion
 
@@ -114,44 +52,34 @@ namespace Presentation.Controllers
             {
                 return BadRequest();
             }
-            var user = await _userManager.FindByEmailAsync(signInViewModel.Email);
+            
+            var errors = await _service.SignIn(signInViewModel);
 
-            if (user is { })
+            if(errors == null || errors.Count() == 0)
             {
-                var flag = await _userManager.CheckPasswordAsync(user, signInViewModel.Password);
-                if (flag)
-                {
-                    var result = await _signInManager.PasswordSignInAsync(user, signInViewModel.Password, signInViewModel.RememberMe, false);
-                    if (result.IsNotAllowed)
-                    {
-                        ModelState.AddModelError(string.Empty, "Your account is not confirmed yet");
-                    }
-
-                    if (result.IsLockedOut)
-                    {
-                        ModelState.AddModelError(string.Empty, "Your account is locked!!");
-                    }
-
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction(nameof(HomeController.Index), "Home");
-                    }
-
-                }
-
+                InjectErrors(errors);
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
+                return View(signInViewModel);
             }
-            ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
 
-            return View(signInViewModel);
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
         #endregion
 
         #region Sign Out
         public async Task<IActionResult> SignOut()
         {
-            await _signInManager.SignOutAsync();
+            await _service.SignOut();
             return RedirectToAction(nameof(SignIn));
         }
         #endregion
+
+        void InjectErrors(List<ErrorViewModel> errors)
+        {
+            foreach (var error in errors)
+            {
+                ModelState.AddModelError(error.fieldName, error.message);
+            }
+        }
     }
 }

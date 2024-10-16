@@ -1,7 +1,7 @@
 ﻿using Shared.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Presentation.ViewModels
+namespace Shared.DTO
 {
     public class SignUpViewModel
     {
