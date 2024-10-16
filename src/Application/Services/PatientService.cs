@@ -29,6 +29,12 @@ namespace Application.Services
             return repository.GetById((int)id);
         }
 
+        public Patient GetPatientBySocialNumber(string socialNumber)
+        {
+            var patient = repository.GetAll().First(p => p.SocialNumber == socialNumber);
+            return patient;
+        }
+
         public bool RemovePatient(uint id)
         {
             var p = repository.GetById((int)id);

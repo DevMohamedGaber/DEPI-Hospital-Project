@@ -8,7 +8,9 @@ namespace Application.Interfaces
         bool RemovePatient(uint id);
         bool UpdatePatient(Patient patient);
         Patient GetPatient(uint id);
+        Patient GetPatientBySocialNumber(string socialNumber);
         IEnumerable<Patient> GetAllPatients(Patient patient);
+
     }
 
 }

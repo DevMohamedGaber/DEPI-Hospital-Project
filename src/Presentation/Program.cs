@@ -19,14 +19,14 @@ builder.Services.AddDbContext<ApplicationContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
 );
 
-builder.Services.AddDbContext<IdentityContext>(
-    options=> options.UseSqlServer(builder.Configuration.GetConnectionString("Identity")));
+//builder.Services.AddDbContext<IdentityContext>(
+//    options=> options.UseSqlServer(builder.Configuration.GetConnectionString("Identity")));
 
 builder.Services.AddIdentity<User, IdentityRole<uint>>((options) =>
 {
     options.User.RequireUniqueEmail = true;
 })
-    .AddEntityFrameworkStores<IdentityContext>();
+    .AddEntityFrameworkStores<ApplicationContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -61,7 +61,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(

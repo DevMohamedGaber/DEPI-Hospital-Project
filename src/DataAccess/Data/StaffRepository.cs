@@ -1,12 +1,12 @@
-﻿using DataAccess.Abstacts;
-using DataAccess.Contexts;
+﻿using DataAccess.Contexts;
+using DataAccess.Entities;
 using DataAccess.Interfaces;
 
 namespace DataAccess.Data
 {
-    public class UserRepository<T> : BaseRepository<T>, IUserRepository<T> where T : User
+    public class StaffRepository<T> : BaseRepository<T>, IUserRepository<T> where T : Staff
     {
-        public UserRepository(ApplicationContext context) : base(context) { }
+        public StaffRepository(ApplicationContext context) : base(context) { }
 
         public T GetByName(string firstName, string lastName)
         {

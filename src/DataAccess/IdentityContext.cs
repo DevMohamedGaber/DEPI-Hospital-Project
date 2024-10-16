@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Contexts
 {
-    public class IdentityContext : IdentityDbContext<User,IdentityRole<uint>,uint>
+    /*public class IdentityContext : IdentityDbContext<User,IdentityRole<uint>,uint>
     {
         public IdentityContext(DbContextOptions<IdentityContext> options)
      : base(options)
@@ -15,5 +15,5 @@ namespace DataAccess.Contexts
         {
             base.OnModelCreating(builder);
         }
-    }
+    }*/
 }

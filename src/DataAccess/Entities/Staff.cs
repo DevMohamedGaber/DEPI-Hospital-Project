@@ -1,9 +1,10 @@
-﻿using DataAccess.Abstacts;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 using Shared.Enums;
 
 namespace DataAccess.Entities
 {
-    public class Patient : BaseEntity
+    public class Staff : IdentityUser<uint>
     {
         public string firstName { get; set; }
         public string lastName { get; set; }
@@ -11,8 +12,10 @@ namespace DataAccess.Entities
         public Gender? gender { get; set; } = Gender.Male;
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
-        public string? EmergencyContactName { get; set; }
-        public string? EmergencyContactRelationship { get; set; }
-        public string? EmergencyContactPhone { get; set; }
+
+        public bool? IsAgree { get; set; }
+        public string Password { get; set; }
+        [Column(TypeName = "decimal(5, 2)")]
+        public decimal? Salary { get; set; } = decimal.Zero;
     }
 }

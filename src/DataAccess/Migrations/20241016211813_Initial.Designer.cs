@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DataAccess.Migrations.Identity
+namespace DataAccess.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
-    [Migration("20241012174759_AddSecurityModule")]
-    partial class AddSecurityModule
+    [DbContext(typeof(ApplicationContext))]
+    [Migration("20241016211813_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,11 +43,19 @@ namespace DataAccess.Migrations.Identity
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsAgree")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -90,7 +98,7 @@ namespace DataAccess.Migrations.Identity
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("gender")
+                    b.Property<byte?>("gender")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("lastName")
@@ -108,6 +116,38 @@ namespace DataAccess.Migrations.Identity
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator().HasValue("User");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Appointment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<uint>", b =>
@@ -241,6 +281,80 @@ namespace DataAccess.Migrations.Identity
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Admin", b =>
+                {
+                    b.HasBaseType("DataAccess.Abstacts.User");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Salary")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.HasDiscriminator().HasValue("Admin");
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Doctor", b =>
+                {
+                    b.HasBaseType("DataAccess.Abstacts.User");
+
+                    b.Property<string>("MedicalLicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Salary")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<int>("ShiftId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("Speciality")
+                        .HasColumnType("tinyint");
+
+                    b.HasDiscriminator().HasValue("Doctor");
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Nurse", b =>
+                {
+                    b.HasBaseType("DataAccess.Abstacts.User");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Salary")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.HasDiscriminator().HasValue("Nurse");
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Patient", b =>
+                {
+                    b.HasBaseType("DataAccess.Abstacts.User");
+
+                    b.Property<string>("EmergencyContactName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmergencyContactPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmergencyContactRelationship")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Patient");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<uint>", b =>

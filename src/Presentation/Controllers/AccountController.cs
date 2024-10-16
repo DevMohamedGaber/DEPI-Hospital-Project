@@ -50,7 +50,9 @@ namespace Presentation.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                Console.WriteLine(signInViewModel.Email);
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
+                return View();
             }
             
             var errors = await _service.SignIn(signInViewModel);

@@ -3,7 +3,7 @@ using DataAccess.Entities;
 
 namespace DataAccess.Data
 {
-    public class AdminRepository : UserRepository<Admin>
+    public class AdminRepository : StaffRepository<Admin>
     {
         public AdminRepository(ApplicationContext context) : base(context) { }
     }

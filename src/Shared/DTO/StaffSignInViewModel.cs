@@ -2,7 +2,7 @@
 
 namespace Shared.DTO
 {
-    public class SignInViewModel
+    public class StaffSignInViewModel
     {
         [EmailAddress]
         public string Email { get; set; }
