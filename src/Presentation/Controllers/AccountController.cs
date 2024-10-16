@@ -40,68 +40,37 @@ namespace Presentation.Controllers
             if (user == null)
             {
                 string role = null;
-                user = new User();
+                user = new User
+                {
+                    firstName = signUpViewModel.FirstName,
+                    lastName = signUpViewModel.LastName,
+                    UserName = signUpViewModel.FirstName + "" + signUpViewModel.LastName,
+                    Email = signUpViewModel.Email,
+                    PhoneNumber = signUpViewModel.PhoneNumber,
+                    Address = signUpViewModel.Address,
+                    gender = signUpViewModel.Gender,
+                    IsAgree = signUpViewModel.IsAgree,
+
+                };
                 switch (signUpViewModel.Role)
                 {
                     case 1:
-                        var Admin = new Admin
-                        {
-                            firstName = signUpViewModel.FirstName,
-                            lastName = signUpViewModel.LastName,
-                            UserName = signUpViewModel.FirstName + "" + signUpViewModel.LastName,
-                            Email = signUpViewModel.Email,
-                            PhoneNumber = signUpViewModel.PhoneNumber,
-                            Address = signUpViewModel.Address,
-                            gender = signUpViewModel.Gender,
-                            IsAgree = signUpViewModel.IsAgree,
-
-                        };
+                        var Admin = (Admin)user;
                         user = Admin;
                         role = "ADMIN";
                         break;
                     case 2:
-                        var Doctor = new Doctor
-                        {
-                            firstName = signUpViewModel.FirstName,
-                            lastName = signUpViewModel.LastName,
-                            UserName = signUpViewModel.FirstName + "" + signUpViewModel.LastName,
-                            Email = signUpViewModel.Email,
-                            PhoneNumber = signUpViewModel.PhoneNumber,
-                            Address = signUpViewModel.Address,
-                            gender = signUpViewModel.Gender,
-                            IsAgree = signUpViewModel.IsAgree,
-                        };
+                        var Doctor = (Doctor)user;
                         user = Doctor;
                         role = "DOCTOR";
                         break;
                     case 3:
-                        var Nurse = new Nurse
-                        {
-                            firstName = signUpViewModel.FirstName,
-                            lastName = signUpViewModel.LastName,
-                            UserName = signUpViewModel.FirstName + "" + signUpViewModel.LastName,
-                            Email = signUpViewModel.Email,
-                            PhoneNumber = signUpViewModel.PhoneNumber,
-                            Address = signUpViewModel.Address,
-                            gender = signUpViewModel.Gender,
-                            IsAgree = signUpViewModel.IsAgree,
-                        };
+                        var Nurse = (Nurse)user;
                         user = Nurse;
                         role = "Nurse";
                         break;
                     case 4:
-                        var Patient = new Patient
-                        {
-                            firstName = signUpViewModel.FirstName,
-                            lastName = signUpViewModel.LastName,
-                            UserName = signUpViewModel.FirstName + "" + signUpViewModel.LastName,
-                            Email = signUpViewModel.Email,
-                            PhoneNumber = signUpViewModel.PhoneNumber,
-                            Address = signUpViewModel.Address,
-                            gender = signUpViewModel.Gender,
-                            SocialNumber = signUpViewModel.SocialNumber,
-                            IsAgree = signUpViewModel.IsAgree,
-                        };
+                        var Patient = (Patient)user;
                         user = Patient;
                         role = "Pastient";
                         break;

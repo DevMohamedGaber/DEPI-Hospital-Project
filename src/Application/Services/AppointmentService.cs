@@ -9,6 +9,10 @@ namespace Application.Services
     {
         IAppointmentRepository appointments_repository;
 
+        public AppointmentService(IAppointmentRepository repository)
+        {
+            this.appointments_repository = repository;
+        }
 
         public bool AddAppointment(Appointment a)
         {

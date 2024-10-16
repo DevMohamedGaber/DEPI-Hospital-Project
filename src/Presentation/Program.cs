@@ -29,18 +29,17 @@ builder.Services.AddIdentity<User, IdentityRole<uint>>((options) =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/SignIn";
-    options.LogoutPath = "/Account/SignIn";
+    options.LogoutPath = "/Account/SignOut";
     
 });
-
-
-
 
 // Dependancy Injection
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
 
 var app = builder.Build();

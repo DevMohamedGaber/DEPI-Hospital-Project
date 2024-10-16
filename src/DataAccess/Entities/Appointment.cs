@@ -3,7 +3,7 @@ using Shared.Enums;
 
 namespace DataAccess.Entities
 {
-    public class Appointment : User
+    public class Appointment : BaseEntity
     {
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
