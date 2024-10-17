@@ -1,6 +1,8 @@
 using Application.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
+using Shared.DTO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Application.Services
 {
@@ -13,9 +15,16 @@ namespace Application.Services
             this.appointments_repository = repository;
         }
 
-        public bool AddAppointment(Appointment a)
+        public bool AddAppointment(AppointmentViewModel a)
         {
-            appointments_repository.Create(a);
+            appointments_repository.Create(new Appointment
+            {
+                PatientId = a.PatientId,
+                DoctorId = a.DoctorId,
+                Date = a.Date,
+                Status = a.Status,
+                Type = a.Type
+            });
             return true;
         }
 

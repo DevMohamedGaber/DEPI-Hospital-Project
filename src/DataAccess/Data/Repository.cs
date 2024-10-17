@@ -9,7 +9,7 @@ namespace DataAccess.Data
 
         public T GetById(int id)
         {
-            var entity = context.Set<T>().Where(x => x.Id == id) as T;
+            var entity = context.Set<T>().FirstOrDefault(x => x.Id == id) as T;
             return entity;
         }
     }

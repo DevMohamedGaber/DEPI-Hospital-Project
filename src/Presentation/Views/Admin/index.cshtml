@@ -1,4 +1,5 @@
-
+@using Shared.DTO;
+@model PatientViewModel;
     <div id="mySidebar" class="sidebar">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
       <a href="#">About</a>
@@ -30,7 +31,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <EditForm method="POST" asp-action="AddNewPatient" Model="">
+          <EditForm method="POST" asp-action="AddNewPatient" Model="AppointmentViewModel"> 
             <div class="form-group">
               <label for="appointmentDateTime">Date and Time</label>
               <input type="datetime-local" class="form-control" id="appointmentDateTime">
@@ -80,16 +81,18 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" asp-action="AddNewAppointment">Save</button>
         </div>
       </div>
     </div>
   </div>
   
-        <h2 class="mt-5 toggle-btn">Appointments ▽</h2>
+        <h2 class="mt-5 toggle-btn">
+            Appointments ▽
+            <span> <button class="btn btn-primary m-3" data-toggle="modal" data-target="#addAppointmentModal">Add+</button></span>  
+        </h2>
         
         
-          <span> <button class="btn btn-primary m-3" data-toggle="modal" data-target="#addAppointmentModal">Add+</button></span>  
         <div class="content">
 
           <div class="table-responsive">
@@ -160,61 +163,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>2023-12-01</td>
-                <td>Annual Check-up: Normal</td>
-                <td>Dr. Jones</td>
-                <td>No issues found</td>
-                <td>No issues found</td>
-                <td> <a href="#" data-toggle="modal" data-target="#doctorModal"
-                  >Details/Edit</a
-                ></td>
-              </tr>
-              <tr>
-                <td>2023-12-15</td>
-                <td>Dermatitis Treatment</td>
-                <td>Dr. Adams</td>
-                <td>Improving condition</td>
-                <td>Improving condition</td>
-                <td><a href="#" data-toggle="modal" data-target="#doctorModal"
-                  >Details/Edit</a</td>
-              </tr>
-              <tr>
-                <td>2023-12-15</td>
-                <td>Dermatitis Treatment</td>
-                <td>Dr. Adams</td>
-                <td>Improving condition</td>
-                <td>Improving condition</td>
-                <td><a href="#" data-toggle="modal" data-target="#doctorModal"
-                  >Details/Edit</a</td>
-              </tr>
-              <tr>
-                <td>2023-12-15</td>
-                <td>Dermatitis Treatment</td>
-                <td>Dr. Adams</td>
-                <td>Improving condition</td>
-                <td>Improving condition</td>
-                <td><a href="#" data-toggle="modal" data-target="#doctorModal"
-                  >Details/Edit</a</td>
-              </tr>
-              <tr>
-                <td>2023-12-15</td>
-                <td>Dermatitis Treatment</td>
-                <td>Dr. Adams</td>
-                <td>Improving condition</td>
-                <td>Improving condition</td>
-                <td><a href="#" data-toggle="modal" data-target="#doctorModal"
-                  >Details/Edit</a</td>
-              </tr>
-              <tr>
-                <td>2023-12-15</td>
-                <td>Dermatitis Treatment</td>
-                <td>Dr. Adams</td>
-                <td>Improving condition</td>
-                <td>Improving condition</td>
-                <td><a href="#" data-toggle="modal" data-target="#doctorModal"
-                  >Details/Edit</a</td>
-              </tr>
+                @foreach(var member in ViewBag.Staff)
+                {
+                    <tr>
+                        <td>@member.Id</td>
+                        <td>@member.firstName</td>
+                        <td>Dr. Jones</td>
+                        <td>No issues found</td>
+                        <td>No issues found</td>
+                        <td> <a href="#" data-toggle="modal" data-target="#doctorModal"
+                            >Details/Edit</a
+                        ></td>
+                    </tr>
+                }
+              
              
               <!-- Add more rows as needed -->
             </tbody>

@@ -1,8 +1,10 @@
-﻿namespace DataAccess.Interfaces
+﻿using DataAccess.Entities;
+
+namespace DataAccess.Interfaces
 {
-    public interface IStaffRepository<T> : IRepository<T> where T : class
+    public interface IStaffRepository : IRepository<Staff>
     {
-        public T GetById(int id);
-        public T GetByName(string firstName, string lastName);
+        public Staff GetById(int id);
+        public Staff GetByName(string firstName, string lastName);
     }
 }

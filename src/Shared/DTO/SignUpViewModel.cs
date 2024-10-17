@@ -29,7 +29,5 @@ namespace Shared.DTO
         public string SocialNumber { get; set; }
         public int Role { get; set; }
 
-        public bool IsAgree { get; set; }
-
     }
 }

@@ -1,7 +1,10 @@
 ﻿using Application.Interfaces;
+using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
 using Shared.DTO;
+using Shared.Enums;
+using System.Net;
 
 
 namespace Application.Services
@@ -14,9 +17,21 @@ namespace Application.Services
             this.repository = repository;
         }
 
-        public bool AddNewPatient(Patient patient)
+        public bool AddNewPatient(PatientViewModel patient)
         {
-            repository.Create(patient);
+            // TODO: Add social number validation
+            repository.Create(new Patient
+            {
+                firstName = patient.firstName,
+                lastName = patient.lastName,
+                SocialNumber = patient.SocialNumber,
+                gender = patient.gender,
+                Address = patient.Address,
+                PhoneNumber = patient.PhoneNumber,
+                EmergencyContactName = patient.EmergencyContactName,
+                EmergencyContactRelationship = patient.EmergencyContactRelationship,
+                EmergencyContactPhone = patient.EmergencyContactPhone
+            });
             return true;
         }
 

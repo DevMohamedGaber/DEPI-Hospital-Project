@@ -5,7 +5,7 @@ namespace Application.Interfaces
 {
     public interface IPatientService
     {
-        bool AddNewPatient(Patient patient);
+        bool AddNewPatient(PatientViewModel patient);
         bool RemovePatient(uint id);
         bool UpdatePatient(Patient patient);
         Patient GetPatient(uint id);

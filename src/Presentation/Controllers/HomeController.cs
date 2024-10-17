@@ -17,6 +17,7 @@ namespace Presentation.Controllers
 
         public IActionResult Index()
         {
+            // TODO: Redirect to role page
             return View();
         }
 

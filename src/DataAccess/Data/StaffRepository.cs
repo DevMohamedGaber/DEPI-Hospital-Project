@@ -4,18 +4,18 @@ using DataAccess.Interfaces;
 
 namespace DataAccess.Data
 {
-    public class StaffRepository<T> : BaseRepository<T>, IStaffRepository<T> where T : Staff
+    public class StaffRepository : BaseRepository<Staff>, IStaffRepository
     {
         public StaffRepository(ApplicationContext context) : base(context) { }
 
-        public T GetByName(string firstName, string lastName)
+        public Staff GetByName(string firstName, string lastName)
         {
-            var user = context.Set<T>().Where(x => x.firstName == firstName && x.lastName == lastName) as T;
+            var user = context.Users.Where(x => x.firstName == firstName && x.lastName == lastName) as Staff;
             return user;
         }
-        public T GetById(int id)
+        public Staff GetById(int id)
         {
-            var entity = context.Set<T>().Where(x => x.Id == id) as T;
+            var entity = context.Users.Where(x => x.Id == id) as Staff;
             return entity;
         }
     }
