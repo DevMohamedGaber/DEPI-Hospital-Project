@@ -22,7 +22,87 @@ namespace DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DataAccess.Abstacts.User", b =>
+            modelBuilder.Entity("DataAccess.Entities.Appointment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("DoctorId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("PatientId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId1");
+
+                    b.HasIndex("PatientId1");
+
+                    b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Patient", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmergencyContactName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmergencyContactPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmergencyContactRelationship")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SocialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("firstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte?>("gender")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("lastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Staff", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,19 +120,11 @@ namespace DataAccess.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsAgree")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -77,6 +149,9 @@ namespace DataAccess.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<decimal?>("Salary")
+                        .HasColumnType("decimal(5, 2)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -114,37 +189,27 @@ namespace DataAccess.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator().HasValue("User");
-
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Appointment", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
-
-                    b.Property<byte>("Type")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Appointments");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "43b41e2d-4e89-452b-a19f-bbf8891965b8",
+                            Email = "admin@depi.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@DEPI.COM",
+                            NormalizedUserName = "SUPERADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOK+g42xva0oCBd6hvbS3fER1qkWg3qR6gmNtlsgKVn8+0lNXjNkYV2G1ZaMdqSlIA==",
+                            PhoneNumberConfirmed = false,
+                            Salary = 0m,
+                            SecurityStamp = "63d58cb1-a2cc-4800-9b3f-8bb3aa19b402",
+                            TwoFactorEnabled = false,
+                            UserName = "SuperAdmin",
+                            firstName = "Admin",
+                            gender = (byte)0,
+                            lastName = "Team 4"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<uint>", b =>
@@ -175,6 +240,26 @@ namespace DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Doctor",
+                            NormalizedName = "DOCTOR"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "Nurse",
+                            NormalizedName = "NURSE"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<uint>", b =>
@@ -223,6 +308,15 @@ namespace DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "Email",
+                            ClaimValue = "admin@depi.com",
+                            UserId = 1L
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<uint>", b =>
@@ -259,6 +353,13 @@ namespace DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1L,
+                            RoleId = 1L
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<uint>", b =>
@@ -280,78 +381,23 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Admin", b =>
+            modelBuilder.Entity("DataAccess.Entities.Appointment", b =>
                 {
-                    b.HasBaseType("DataAccess.Abstacts.User");
+                    b.HasOne("DataAccess.Entities.Staff", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasOne("DataAccess.Entities.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<decimal?>("Salary")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("decimal(5, 2)");
+                    b.Navigation("Doctor");
 
-                    b.HasDiscriminator().HasValue("Admin");
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Doctor", b =>
-                {
-                    b.HasBaseType("DataAccess.Abstacts.User");
-
-                    b.Property<string>("MedicalLicenseNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Salary")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<int>("ShiftId")
-                        .HasColumnType("int");
-
-                    b.Property<byte>("Speciality")
-                        .HasColumnType("tinyint");
-
-                    b.HasDiscriminator().HasValue("Doctor");
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Nurse", b =>
-                {
-                    b.HasBaseType("DataAccess.Abstacts.User");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Salary")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.HasDiscriminator().HasValue("Nurse");
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Patient", b =>
-                {
-                    b.HasBaseType("DataAccess.Abstacts.User");
-
-                    b.Property<string>("EmergencyContactName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmergencyContactPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmergencyContactRelationship")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Patient");
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<uint>", b =>
@@ -365,7 +411,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<uint>", b =>
                 {
-                    b.HasOne("DataAccess.Abstacts.User", null)
+                    b.HasOne("DataAccess.Entities.Staff", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -374,7 +420,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<uint>", b =>
                 {
-                    b.HasOne("DataAccess.Abstacts.User", null)
+                    b.HasOne("DataAccess.Entities.Staff", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -389,7 +435,7 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Abstacts.User", null)
+                    b.HasOne("DataAccess.Entities.Staff", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -398,7 +444,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<uint>", b =>
                 {
-                    b.HasOne("DataAccess.Abstacts.User", null)
+                    b.HasOne("DataAccess.Entities.Staff", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

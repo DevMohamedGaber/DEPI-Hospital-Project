@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities;
+using Shared.DTO;
 
 namespace Application.Interfaces
 {
@@ -8,7 +9,7 @@ namespace Application.Interfaces
         bool RemovePatient(uint id);
         bool UpdatePatient(Patient patient);
         Patient GetPatient(uint id);
-        Patient GetPatientBySocialNumber(string socialNumber);
+        Patient GetPatientBySocialNumber(PatientSignInViewModel socialNumber);
         IEnumerable<Patient> GetAllPatients(Patient patient);
 
     }

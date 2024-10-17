@@ -1,9 +1,9 @@
-﻿using DataAccess.Abstacts;
+﻿using Shared.Base;
 using DataAccess.Contexts;
 
 namespace DataAccess.Data
 {
-    public class Repository<T> : BaseRepository<T> where T : BaseEntity
+    public class Repository<T> : BaseRepository<T> where T : Entity
     {
         public Repository(ApplicationContext context) : base(context) { }
 

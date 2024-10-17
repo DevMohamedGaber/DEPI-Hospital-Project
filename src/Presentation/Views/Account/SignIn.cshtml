@@ -15,12 +15,13 @@
                    asp-for="Email"
                    class="form-control"
                    placeholder="type your Email or national Id here.."
+                   value="admin@depi.com"
                    autofocus />
             <span asp-validation-for="Email"></span>
         </div>
         <div data-mdb-input-init class="form-outline mb-4">
             <label class="form-label" asp-for="Password">Password</label>
-            <input type="password" id="form2Example2" class="form-control" asp-for="Password" />
+            <input type="password" id="form2Example2" class="form-control" asp-for="Password" value="0123456789" />
             <span asp-validation-for="Password"></span>
         </div>
         <div class="row mb-4">
@@ -31,10 +32,12 @@
                            value=""
                            id="form2Example31"
                            asp-for="RememberMe"
+                           value="false"
                            checked />
                     <label class="form-check-label mb-3" asp-for="RememberMe">Remember me</label>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block mb-4"> Sign in </button>
     </form>
+    <a href="/Patient">I'm a Patient</a>
 </div>

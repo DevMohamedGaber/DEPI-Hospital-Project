@@ -2,7 +2,6 @@ using Application.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
 
-
 namespace Application.Services
 {
     public class AppointmentService : IAppointmentService
@@ -18,6 +17,11 @@ namespace Application.Services
         {
             appointments_repository.Create(a);
             return true;
+        }
+
+        public List<Appointment> GetAll()
+        {
+            return appointments_repository.GetAll().ToList();
         }
 
         public IEnumerable<Appointment> GetDoctortAppointments(int DoctorId)

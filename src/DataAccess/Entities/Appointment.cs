@@ -1,12 +1,14 @@
-﻿using DataAccess.Abstacts;
+﻿using Shared.Base;
 using Shared.Enums;
 
 namespace DataAccess.Entities
 {
-    public class Appointment : BaseEntity
+    public class Appointment : Entity
     {
         public int PatientId { get; set; }
+        public Patient Patient { get; set; }
         public int DoctorId { get; set; }
+        public Staff Doctor { get; set; }
         public DateTime Date { get; set; }
         public AppointmentStatus Status { get; set; }
         public AppointmentType Type { get; set; }

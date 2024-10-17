@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
+using Shared.DTO;
 
 
 namespace Application.Services
@@ -29,9 +30,9 @@ namespace Application.Services
             return repository.GetById((int)id);
         }
 
-        public Patient GetPatientBySocialNumber(string socialNumber)
+        public Patient GetPatientBySocialNumber(PatientSignInViewModel model)
         {
-            var patient = repository.GetAll().First(p => p.SocialNumber == socialNumber);
+            var patient = repository.GetAll().FirstOrDefault(p => p.SocialNumber == model.SocialNumber);
             return patient;
         }
 

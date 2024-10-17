@@ -4,6 +4,7 @@ namespace Application.Interfaces
 {
 	public interface IAppointmentService
 	{
+		List<Appointment> GetAll();
 		bool AddAppointment(Appointment a);
 		bool RemoveAppointment(Appointment a);
 		bool UpdateAppointment(Appointment a);

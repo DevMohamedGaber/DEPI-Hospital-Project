@@ -5,7 +5,7 @@ using DataAccess.Interfaces;
 using DataAccess.Contexts;
 using DataAccess.Data;
 using Microsoft.AspNetCore.Identity;
-using DataAccess.Abstacts;
+using DataAccess.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +19,15 @@ builder.Services.AddDbContext<ApplicationContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
 );
 
-//builder.Services.AddDbContext<IdentityContext>(
-//    options=> options.UseSqlServer(builder.Configuration.GetConnectionString("Identity")));
-
-builder.Services.AddIdentity<User, IdentityRole<uint>>((options) =>
+builder.Services.AddIdentity<Staff, IdentityRole<uint>>((options) =>
 {
     options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+    options.Password.RequiredUniqueChars = 0;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
 })
     .AddEntityFrameworkStores<ApplicationContext>();
 

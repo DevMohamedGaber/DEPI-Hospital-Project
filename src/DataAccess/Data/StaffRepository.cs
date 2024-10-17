@@ -4,7 +4,7 @@ using DataAccess.Interfaces;
 
 namespace DataAccess.Data
 {
-    public class StaffRepository<T> : BaseRepository<T>, IUserRepository<T> where T : Staff
+    public class StaffRepository<T> : BaseRepository<T>, IStaffRepository<T> where T : Staff
     {
         public StaffRepository(ApplicationContext context) : base(context) { }
 

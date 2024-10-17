@@ -20,17 +20,17 @@ namespace DEPI_Hospital_Project.Controllers
         [HttpPost]
         public IActionResult Index(PatientSignInViewModel model)
         {
+            var patient = Service.GetPatientBySocialNumber(model);
 
-        }
-        public IActionResult AddPatient()
-        {
-            Service.AddNewPatient(new Patient
+            if(patient == null)
             {
-                firstName = "Mohamed",
-                lastName = "gaber"
-            });
-            return Ok();
-        }
+                ModelState.AddModelError("SocialNumber", "no patient found that matches this social ID");
+                return View();
+            }
 
+            ViewBag.Patient = patient;
+
+            return View("info");
+        }
     }
 }

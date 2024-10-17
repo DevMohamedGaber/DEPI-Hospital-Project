@@ -1,5 +1,6 @@
-﻿using Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Application.Interfaces;
+using DataAccess.Entities;
 using Shared.DTO;
 
 namespace Presentation.Controllers
@@ -46,25 +47,25 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(SignInViewModel signInViewModel)
+        public async Task<IActionResult> SignIn(StaffSignInViewModel signInViewModel)
         {
             if (!ModelState.IsValid)
             {
-                Console.WriteLine(signInViewModel.Email);
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
-                return View();
-            }
-            
-            var errors = await _service.SignIn(signInViewModel);
-
-            if(errors == null || errors.Count() == 0)
-            {
-                InjectErrors(errors);
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
                 return View(signInViewModel);
             }
+            
+            var result = await _service.SignIn(signInViewModel);
+            if(result.Item1.Count() > 0)
+            {
+                InjectErrors(result.Item1);
+                //ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
+                return View(signInViewModel);
+            }
 
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            string role = await _service.GetUserRole(result.Item2);
+
+            return RedirectToAction("Index", role);
         }
         #endregion
 

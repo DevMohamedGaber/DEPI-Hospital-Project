@@ -1,9 +1,9 @@
-﻿using DataAccess.Abstacts;
+﻿using Shared.Base;
 using Shared.Enums;
 
 namespace DataAccess.Entities
 {
-    public class DoctorInfo : BaseEntity
+    public class DoctorInfo : Entity
     {
         public Speciality Speciality { get; set; }
         public int ShiftId { get; set; } = 0;

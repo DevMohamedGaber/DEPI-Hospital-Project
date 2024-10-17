@@ -10,7 +10,9 @@ namespace DataAccess.Data
 
         public Patient GetByName(string firstName, string lastName)
         {
-            throw new NotImplementedException();
+            var patient = GetAll().First(p => p.firstName == firstName && p.firstName == lastName);
+            return patient;
         }
+
     }
 }

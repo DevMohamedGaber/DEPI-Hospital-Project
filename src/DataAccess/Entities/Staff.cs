@@ -12,9 +12,6 @@ namespace DataAccess.Entities
         public Gender? gender { get; set; } = Gender.Male;
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
-
-        public bool? IsAgree { get; set; }
-        public string Password { get; set; }
         [Column(TypeName = "decimal(5, 2)")]
         public decimal? Salary { get; set; } = decimal.Zero;
     }

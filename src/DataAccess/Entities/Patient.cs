@@ -1,9 +1,9 @@
-﻿using DataAccess.Abstacts;
-using Shared.Enums;
+﻿using Shared.Enums;
+using Shared.Base;
 
 namespace DataAccess.Entities
 {
-    public class Patient : BaseEntity
+    public class Patient : Entity
     {
         public string firstName { get; set; }
         public string lastName { get; set; }

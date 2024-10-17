@@ -1,19 +1,19 @@
 ﻿using Application.Interfaces;
-using DataAccess.Abstacts;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Shared.DTO;
+using System.Security.Claims;
 
 namespace Application.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<Staff> _userManager;
+        private readonly SignInManager<Staff> _signInManager;
         private readonly RoleManager<IdentityRole<uint>> _roleManager;
 
-        public AuthenticationService(UserManager<User> userManager, 
-            SignInManager<User> signInManager, 
+        public AuthenticationService(UserManager<Staff> userManager, 
+            SignInManager<Staff> signInManager, 
             RoleManager<IdentityRole<uint>> roleManager)
         {
             _userManager = userManager;
@@ -30,7 +30,7 @@ namespace Application.Services
             if (user == null)
             {
                 string role = null;
-                user = new User
+                user = new Staff
                 {
                     firstName = signUpViewModel.FirstName,
                     lastName = signUpViewModel.LastName,
@@ -39,30 +39,17 @@ namespace Application.Services
                     PhoneNumber = signUpViewModel.PhoneNumber,
                     Address = signUpViewModel.Address,
                     gender = signUpViewModel.Gender,
-                    IsAgree = signUpViewModel.IsAgree,
-
                 };
                 switch (signUpViewModel.Role)
                 {
                     case 1:
-                        var Admin = (Admin)user;
-                        user = Admin;
                         role = "ADMIN";
                         break;
                     case 2:
-                        var Doctor = (Doctor)user;
-                        user = Doctor;
                         role = "DOCTOR";
                         break;
                     case 3:
-                        var Nurse = (Nurse)user;
-                        user = Nurse;
                         role = "Nurse";
-                        break;
-                    case 4:
-                        var Patient = (Patient)user;
-                        user = Patient;
-                        role = "Pastient";
                         break;
                 }
 
@@ -89,42 +76,53 @@ namespace Application.Services
 
             return errors;
         }
-        public async Task<List<ErrorViewModel>> SignIn(SignInViewModel signInViewModel)
+        public async Task<(List<ErrorViewModel>, Staff?)> SignIn(StaffSignInViewModel signInViewModel)
         {
             var errors = new List<ErrorViewModel>();
 
             var user = await _userManager.FindByEmailAsync(signInViewModel.Email);
 
-            if (user is { })
+            if (user == null)
             {
-                var flag = await _userManager.CheckPasswordAsync(user, signInViewModel.Password);
-                if (flag)
-                {
-                    var result = await _signInManager.PasswordSignInAsync(user, signInViewModel.Password, signInViewModel.RememberMe, false);
-                    if (result.IsNotAllowed)
-                    {
-                        errors.Add(new ErrorViewModel(string.Empty, "Your account is not confirmed yet"));
-                    }
-
-                    if (result.IsLockedOut)
-                    {
-                        errors.Add(new ErrorViewModel(string.Empty, "Your account is locked!!"));
-                    }
-
-                    if (result.Succeeded)
-                    {
-                        
-                    }
-
-                }
-
+                errors.Add(new ErrorViewModel("Email", "Invalid Email Address"));
+                return (errors, null);
             }
 
-            return errors;
+            var flag = await _userManager.CheckPasswordAsync(user, signInViewModel.Password);
+            if (!flag)
+            {
+                errors.Add(new ErrorViewModel("Password", "Invalid Password"));
+                return (errors, null);
+            }
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, user.Email));
+            var result = await _signInManager.PasswordSignInAsync(user, signInViewModel.Password, signInViewModel.RememberMe, false);
+            
+            if (result.IsNotAllowed)
+            {
+                errors.Add(new ErrorViewModel(string.Empty, "Your account is not confirmed yet"));
+            }
+
+            if (result.IsLockedOut)
+            {
+                errors.Add(new ErrorViewModel(string.Empty, "Your account is locked!!"));
+            }
+
+            return (errors, user);
         }
         public async Task SignOut()
         {
             await _signInManager.SignOutAsync();
+        }
+        public async Task<string> GetUserRole(Staff staff)
+        {
+            var roles = await _userManager.GetRolesAsync(staff);
+
+            if(roles.Count() == 0)
+            {
+                return null;
+            }
+
+            return roles[0];
         }
     }
 }
