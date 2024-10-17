@@ -8,9 +8,9 @@ namespace Application.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly UserManager<Staff> _userManager;
+        protected readonly UserManager<Staff> _userManager;
         private readonly SignInManager<Staff> _signInManager;
-        private readonly RoleManager<IdentityRole<uint>> _roleManager;
+        protected readonly RoleManager<IdentityRole<uint>> _roleManager;
 
         public AuthenticationService(UserManager<Staff> userManager, 
             SignInManager<Staff> signInManager, 

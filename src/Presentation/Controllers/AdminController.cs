@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO;
 
@@ -24,6 +25,7 @@ namespace Presentation.Controllers
             ViewBag.Staff = staff.GetAll();
             return View();
         }
+        #region Patients
         public IActionResult AddPatient()
         {
             return View();
@@ -46,6 +48,7 @@ namespace Presentation.Controllers
             ViewBag.Patient = patient;
             return View();
         }
+        #endregion
         #region Appointment
         public async Task<IActionResult> AddAppointment(int patientId)
         {
@@ -59,6 +62,31 @@ namespace Presentation.Controllers
         {
             //appointments.AddAppointment()
             return View(model);
+        }
+        #endregion
+        #region Staff
+        public async Task<IActionResult> ViewStaff()
+        {
+            ViewBag.Staff = await staff.GetAllWithRole();
+            ViewBag.Roles = staff.GetAllRoles();
+            return View();
+        }
+        public async Task<IActionResult> ViewStaffMember(int id)
+        {
+            if (id == 0)
+            {
+                return View("ViewStaff");
+            }
+
+            var user = await staff.GetUserWithRole((uint)id);
+
+            if(user == null)
+            {
+                return View("ViewStaff");
+            }
+
+            ViewBag.Staff = user;
+            return View();
         }
         #endregion
     }

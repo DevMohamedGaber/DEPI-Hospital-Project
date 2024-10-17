@@ -1,10 +1,8 @@
 ﻿<div class="modal-body">
-
     <a class="btn btn-primary" href="/Admin/AddAppointment?patientId=@ViewBag.Patient.Id">Add New Appointment</a>
     <br />
 
-    <p>First Name: @ViewBag.Patient.firstName</p>
-    <p>Last Name: @ViewBag.Patient.lastName</p>
+    <p>Full Name: @(ViewBag.Patient.firstName + " " + ViewBag.Patient.lastName)</p>
     <p>Social Number: @ViewBag.Patient.SocialNumber</p>
     <p>Gender: @ViewBag.Patient.gender.ToString()</p>
     <p>Address: @ViewBag.Patient.Address</p>
