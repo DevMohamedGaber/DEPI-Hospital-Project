@@ -3,9 +3,6 @@ using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
 using Shared.DTO;
-using Shared.Enums;
-using System.Net;
-
 
 namespace Application.Services
 {
@@ -35,7 +32,7 @@ namespace Application.Services
             return true;
         }
 
-        public IEnumerable<Patient> GetAllPatients(Patient patient)
+        public List<Patient> GetAllPatients()
         {
             return repository.GetAll().ToList();
         }

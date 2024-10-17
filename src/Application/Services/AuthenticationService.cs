@@ -25,39 +25,28 @@ namespace Application.Services
         {
             var errors = new List<ErrorViewModel>();
 
-            var user = await _userManager.FindByNameAsync(signUpViewModel.FirstName + "" + signUpViewModel.LastName);
+            var user = await _userManager.FindByEmailAsync(signUpViewModel.Email);
 
             if (user == null)
             {
-                string role = null;
                 user = new Staff
                 {
                     firstName = signUpViewModel.FirstName,
                     lastName = signUpViewModel.LastName,
-                    UserName = signUpViewModel.FirstName + "" + signUpViewModel.LastName,
+                    UserName = signUpViewModel.Username,
                     Email = signUpViewModel.Email,
                     PhoneNumber = signUpViewModel.PhoneNumber,
                     Address = signUpViewModel.Address,
                     gender = signUpViewModel.Gender,
+                    SocialNumber = signUpViewModel.SocialNumber,
+                    Salary = signUpViewModel.Salary,
                 };
-                switch (signUpViewModel.Role)
-                {
-                    case 1:
-                        role = "ADMIN";
-                        break;
-                    case 2:
-                        role = "DOCTOR";
-                        break;
-                    case 3:
-                        role = "Nurse";
-                        break;
-                }
 
                 var result = await _userManager.CreateAsync(user, signUpViewModel.Password);
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, role);
+                    await _userManager.AddToRoleAsync(user, signUpViewModel.Role);
                     return null;
                 }
                 else
@@ -123,6 +112,12 @@ namespace Application.Services
             }
 
             return roles[0];
+        }
+        public List<IdentityRole<uint>> GetAllRoles()
+        {
+            var result = _roleManager.Roles.ToList();
+
+            return result;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Presentation.Controllers
         public IActionResult Index()
         {
             // TODO: Redirect to role page
-            return View();
+            return Redirect("/Account/SignIn");
         }
 
         public IActionResult Privacy()

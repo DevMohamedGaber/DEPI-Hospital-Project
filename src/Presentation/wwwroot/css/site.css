@@ -1,3 +1,4 @@
+
 body,
 html {
     height: 100%;
@@ -739,4 +740,9 @@ table th input[type="text"] {
 table td {
     white-space: pre-line;
     word-wrap: break-word;
+}
+
+.NormalizeUpnormalHight {
+    width: 90%;
+    margin-top: 500px;
 }

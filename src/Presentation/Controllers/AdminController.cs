@@ -26,6 +26,12 @@ namespace Presentation.Controllers
             return View();
         }
         #region Patients
+        public IActionResult ViewPatients()
+        {
+            var patientsList = patients.GetAllPatients();
+            ViewBag.Patients = patientsList;
+            return View();
+        }
         public IActionResult AddPatient()
         {
             return View();
@@ -86,6 +92,16 @@ namespace Presentation.Controllers
             }
 
             ViewBag.Staff = user;
+            return View();
+        }
+        public IActionResult AddStaffMember()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddStaffMember(SignUpViewModel model)
+        {
+
             return View();
         }
         #endregion

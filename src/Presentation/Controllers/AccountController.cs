@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using DataAccess.Entities;
 using Shared.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Presentation.Controllers
 {
@@ -14,16 +15,17 @@ namespace Presentation.Controllers
         }
 
         #region Sign Up
-        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult SignUp()
         {
+            ViewBag.Roles = _service.GetAllRoles();
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModel signUpViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
@@ -32,10 +34,9 @@ namespace Presentation.Controllers
             if (errors == null || errors.Count() == 0)
             {
                 InjectErrors(errors);
-                return View(signUpViewModel);
             }
 
-            return RedirectToAction(nameof(SignIn));
+            return View(signUpViewModel);
         }
         #endregion
 
@@ -70,6 +71,8 @@ namespace Presentation.Controllers
         #endregion
 
         #region Sign Out
+        [Authorize]
+        [HttpPost]
         public async Task<IActionResult> SignOut()
         {
             await _service.SignOut();

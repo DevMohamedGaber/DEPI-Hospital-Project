@@ -12,12 +12,10 @@ namespace Shared.DTO
         [EmailAddress]
         public string Email { get; set; }
 
+        public string Username { get; set; }
+
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm Password")]
-        [Compare("Password")]
-        public string ConfirmedPassword { get; set; }
 
         [Phone]
         public string PhoneNumber { get; set; }
@@ -27,7 +25,8 @@ namespace Shared.DTO
         public Gender Gender { get; set; }
 
         public string SocialNumber { get; set; }
-        public int Role { get; set; }
+        public decimal Salary { get; set; }
+        public string Role { get; set; }
 
     }
 }

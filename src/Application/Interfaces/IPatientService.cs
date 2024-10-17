@@ -10,7 +10,7 @@ namespace Application.Interfaces
         bool UpdatePatient(Patient patient);
         Patient GetPatient(uint id);
         Patient GetPatientBySocialNumber(PatientSignInViewModel socialNumber);
-        IEnumerable<Patient> GetAllPatients(Patient patient);
+        List<Patient> GetAllPatients();
 
     }
 

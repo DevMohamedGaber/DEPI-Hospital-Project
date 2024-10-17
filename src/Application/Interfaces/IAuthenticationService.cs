@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities;
+using Microsoft.AspNetCore.Identity;
 using Shared.DTO;
 
 namespace Application.Interfaces
@@ -8,6 +9,7 @@ namespace Application.Interfaces
         Task<List<ErrorViewModel>> SignUp(SignUpViewModel signUpViewModel);
         Task<(List<ErrorViewModel>, Staff?)> SignIn(StaffSignInViewModel signInViewModel);
         Task SignOut();
+        List<IdentityRole<uint>> GetAllRoles();
         Task<string> GetUserRole(Staff staff);
     }
 }
