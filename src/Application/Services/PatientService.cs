@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces;
-using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
 using Shared.DTO;

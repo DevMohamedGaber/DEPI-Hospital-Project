@@ -33,13 +33,13 @@ namespace Application.Services
             return appointments_repository.GetAll().ToList();
         }
 
-        public IEnumerable<Appointment> GetDoctortAppointments(int DoctorId)
+        public List<Appointment> GetDoctortAppointments(int DoctorId)
         {
             return appointments_repository.GetAll().
                 Where(a => a.DoctorId == DoctorId).ToList();
         }
 
-        public IEnumerable<Appointment> GetPatientAppointments(int PatientId)
+        public List<Appointment> GetPatientAppointments(int PatientId)
         {
             return appointments_repository.GetAll().
                 Where(a => a.PatientId == PatientId).ToList();

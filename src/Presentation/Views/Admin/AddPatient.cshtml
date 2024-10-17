@@ -1,6 +1,6 @@
 ﻿@using Shared.DTO;
 @model PatientViewModel;
-<div id="main">
+<div id="main" class="NormalizeUpnormalHight">
 <h1>Add New Patient</h1>
     <form method="POST" asp-action="AddPatient">
         <div class="form-group">
@@ -50,7 +50,7 @@
         </div>
 
         <div class="form-group">
-            <a href="/Admin" class="btn btn-secondary">Close</a>
+            <a href="/Admin/ViewPatients" class="btn btn-secondary">Close</a>
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
         <div asp-validation-summary="ModelOnly"></div>

@@ -66,7 +66,7 @@ namespace Presentation.Controllers
         [HttpPost]
         public IActionResult AddAppointment(AppointmentViewModel model)
         {
-            //appointments.AddAppointment()
+            appointments.AddAppointment(model);
             return View(model);
         }
         #endregion
