@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Shared.DTO;
+using Shared.Enums;
+using System.Net;
 
 namespace Presentation.Controllers
 {
@@ -27,12 +29,24 @@ namespace Presentation.Controllers
             return View();
         }
         #region Patients
+        // view
         public IActionResult ViewPatients()
         {
             var patientsList = patients.GetAllPatients();
             ViewBag.Patients = patientsList;
             return View();
         }
+        public IActionResult ViewPatient(int id)
+        {
+            Patient patient = patients.GetPatient((uint)id);
+            if (patient == null)
+            {
+                return View("Index");
+            }
+            ViewBag.Patient = patient;
+            return View();
+        }
+        // add
         public IActionResult AddPatient()
         {
             return View();
@@ -45,19 +59,34 @@ namespace Presentation.Controllers
             return View(model);
         }
 
-        public IActionResult ViewPatient(int id)
+        // update
+        public IActionResult EditPatient(uint id)
         {
-            Patient patient = patients.GetPatient((uint)id);
-            if(patient == null)
+            Patient patient = patients.GetPatient(id);
+
+            return View(new PatientViewModelWithId
             {
-                return View("Index");
-            }
-            ViewBag.Patient = patient;
-            return View();
+                Id = id,
+                firstName = patient.firstName,
+                lastName = patient.lastName,
+                SocialNumber = patient.SocialNumber,
+                gender = patient.gender,
+                Address = patient.Address,
+                PhoneNumber = patient.PhoneNumber,
+                EmergencyContactName = patient.EmergencyContactName,
+                EmergencyContactRelationship = patient.EmergencyContactRelationship,
+                EmergencyContactPhone = patient.EmergencyContactPhone
+            });
+        }
+        [HttpPost]
+        public IActionResult EditPatient(PatientViewModelWithId model)
+        {
+            patients.UpdatePatient(model);
+            return RedirectToAction("ViewPatient", new { id = model.Id });
         }
         #endregion
         #region Appointment
-        public async Task<IActionResult> AddAppointment(int patientId)
+            public async Task<IActionResult> AddAppointment(int patientId)
         {
             ViewBag.patientId = patientId;
             ViewBag.Doctors = await staff.GetAllDoctors();

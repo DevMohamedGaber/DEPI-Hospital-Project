@@ -12,6 +12,7 @@ namespace Application.Interfaces
         Patient GetPatientBySocialNumber(PatientSignInViewModel socialNumber);
         List<Patient> GetAllPatients();
 
+        bool UpdatePatient(PatientViewModelWithId model);
     }
 
 }

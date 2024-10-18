@@ -1,5 +1,7 @@
 ﻿<div class="modal-body">
+    <a class="btn btn-secondary" href="/Admin/ViewPatients">Go Back</a>
     <a class="btn btn-primary" href="/Admin/AddAppointment?patientId=@ViewBag.Patient.Id">Add New Appointment</a>
+    <a class="btn btn-success" href="/Admin/EditPatient?id=@ViewBag.Patient.Id">Edit Patient</a>
     <br />
 
     <p>Full Name: @(ViewBag.Patient.firstName + " " + ViewBag.Patient.lastName)</p>

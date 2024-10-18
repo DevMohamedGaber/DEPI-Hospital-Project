@@ -2,6 +2,8 @@
 using DataAccess.Entities;
 using DataAccess.Interfaces;
 using Shared.DTO;
+using Shared.Enums;
+using System.Net;
 
 namespace Application.Services
 {
@@ -62,6 +64,24 @@ namespace Application.Services
                 return false;
             }
             repository.Update(patient);
+            return true;
+        }
+
+        public bool UpdatePatient(PatientViewModelWithId model)
+        {
+            repository.Update(new Patient
+            {
+                Id = model.Id,
+                firstName = model.firstName,
+                lastName = model.lastName,
+                SocialNumber = model.SocialNumber,
+                gender = model.gender,
+                Address = model.Address,
+                PhoneNumber = model.PhoneNumber,
+                EmergencyContactName = model.EmergencyContactName,
+                EmergencyContactRelationship = model.EmergencyContactRelationship,
+                EmergencyContactPhone = model.EmergencyContactPhone
+            });
             return true;
         }
     }
