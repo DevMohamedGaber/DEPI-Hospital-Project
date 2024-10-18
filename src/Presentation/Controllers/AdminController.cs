@@ -3,6 +3,7 @@ using DataAccess.Entities;
 using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Shared.DTO;
 
 namespace Presentation.Controllers
@@ -66,8 +67,9 @@ namespace Presentation.Controllers
         [HttpPost]
         public IActionResult AddAppointment(AppointmentViewModel model)
         {
-            appointments.AddAppointment(model);
-            return View(model);
+            bool isAdded = appointments.AddAppointment(model);
+            ModelState.AddModelError(string.Empty, isAdded ? "Added Successfully." : "Failed To Add new record.");
+            return RedirectToAction("AddAppointment", new { patientId = model.PatientId });
         }
         #endregion
         #region Staff

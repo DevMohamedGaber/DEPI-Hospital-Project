@@ -14,5 +14,7 @@ namespace DataAccess.Entities
         public string? EmergencyContactName { get; set; }
         public string? EmergencyContactRelationship { get; set; }
         public string? EmergencyContactPhone { get; set; }
+
+        public List<Appointment> Appointments { get; set; }
     }
 }

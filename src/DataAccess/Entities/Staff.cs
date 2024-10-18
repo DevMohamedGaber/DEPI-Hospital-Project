@@ -14,5 +14,7 @@ namespace DataAccess.Entities
         public string? PhoneNumber { get; set; }
         [Column(TypeName = "decimal(5, 2)")]
         public decimal? Salary { get; set; } = decimal.Zero;
+
+        public List<Appointment> Appointments { get; set; }
     }
 }

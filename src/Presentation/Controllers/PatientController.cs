@@ -8,9 +8,11 @@ namespace DEPI_Hospital_Project.Controllers
     public class PatientController : Controller
     {
         private IPatientService Service;
-        public PatientController(IPatientService Service)
+        private IAppointmentService AppointmentService;
+        public PatientController(IPatientService Service, IAppointmentService AppointmentService)
         {
             this.Service = Service;
+            this.AppointmentService = AppointmentService;
         }
 
         public IActionResult Index()
@@ -29,6 +31,7 @@ namespace DEPI_Hospital_Project.Controllers
             }
 
             ViewBag.Patient = patient;
+            ViewBag.Appointments = AppointmentService.GetPatientAppointments(patient.Id);
 
             return View("info");
         }

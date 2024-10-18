@@ -9,8 +9,8 @@ namespace Application.Interfaces
 		bool AddAppointment(AppointmentViewModel a);
 		bool RemoveAppointment(Appointment a);
 		bool UpdateAppointment(Appointment a);
-		List<Appointment> GetPatientAppointments(int PatientId);
-        List<Appointment> GetDoctortAppointments(int DoctorId);
+		List<Appointment> GetPatientAppointments(uint PatientId);
+        List<Appointment> GetDoctortAppointments(uint DoctorId);
 	}
 
 }

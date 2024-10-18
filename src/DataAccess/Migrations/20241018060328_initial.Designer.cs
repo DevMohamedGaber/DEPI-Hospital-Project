@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241017103058_Initial")]
-    partial class Initial
+    [Migration("20241018060328_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,16 +36,10 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("DoctorId1")
+                    b.Property<long>("DoctorId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("PatientId1")
+                    b.Property<long>("PatientId")
                         .HasColumnType("bigint");
 
                     b.Property<byte>("Status")
@@ -56,9 +50,9 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId1");
+                    b.HasIndex("DoctorId");
 
-                    b.HasIndex("PatientId1");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
                 });
@@ -197,16 +191,16 @@ namespace DataAccess.Migrations
                         {
                             Id = 1L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "43b41e2d-4e89-452b-a19f-bbf8891965b8",
+                            ConcurrencyStamp = "e3a1cafd-868f-4e44-8c00-ba2df1c8881a",
                             Email = "admin@depi.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DEPI.COM",
                             NormalizedUserName = "SUPERADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOK+g42xva0oCBd6hvbS3fER1qkWg3qR6gmNtlsgKVn8+0lNXjNkYV2G1ZaMdqSlIA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKhs7MKdRQakXrvAWqZRx6+a0GQNDxoQuB+Mv+/0WyRYjQ3vQLfewmL41NvJFp+QKg==",
                             PhoneNumberConfirmed = false,
                             Salary = 0m,
-                            SecurityStamp = "63d58cb1-a2cc-4800-9b3f-8bb3aa19b402",
+                            SecurityStamp = "d0285726-7f8d-46dd-98a8-646680287c9c",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin",
                             firstName = "Admin",
@@ -387,14 +381,14 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Entities.Appointment", b =>
                 {
                     b.HasOne("DataAccess.Entities.Staff", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId1")
+                        .WithMany("Appointments")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DataAccess.Entities.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId1")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -452,6 +446,16 @@ namespace DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Patient", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Staff", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }

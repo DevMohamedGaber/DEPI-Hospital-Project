@@ -17,6 +17,12 @@ namespace DataAccess.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Appointment>()
+                .HasOne(a => a.Doctor)
+                .WithMany(a => a.Appointments)
+                .HasForeignKey(a => a.DoctorId)
+                .IsRequired();
+
             // seed roles
             builder.Entity<IdentityRole<uint>>().HasData([
                 new IdentityRole<uint> { Id = 1, Name= "Admin", NormalizedName = "ADMIN"},

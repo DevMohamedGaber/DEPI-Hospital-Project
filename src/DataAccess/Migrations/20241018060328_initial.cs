@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -193,10 +193,8 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PatientId = table.Column<int>(type: "int", nullable: false),
-                    PatientId1 = table.Column<long>(type: "bigint", nullable: false),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    DoctorId1 = table.Column<long>(type: "bigint", nullable: false),
+                    PatientId = table.Column<long>(type: "bigint", nullable: false),
+                    DoctorId = table.Column<long>(type: "bigint", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<byte>(type: "tinyint", nullable: false),
                     Type = table.Column<byte>(type: "tinyint", nullable: false)
@@ -205,14 +203,14 @@ namespace DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_AspNetUsers_DoctorId1",
-                        column: x => x.DoctorId1,
+                        name: "FK_Appointments_AspNetUsers_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointments_Patients_PatientId1",
-                        column: x => x.PatientId1,
+                        name: "FK_Appointments_Patients_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -231,7 +229,7 @@ namespace DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Salary", "SecurityStamp", "SocialNumber", "TwoFactorEnabled", "UserName", "firstName", "gender", "lastName" },
-                values: new object[] { 1L, 0, null, "43b41e2d-4e89-452b-a19f-bbf8891965b8", "admin@depi.com", false, false, null, "ADMIN@DEPI.COM", "SUPERADMIN", "AQAAAAIAAYagAAAAEOK+g42xva0oCBd6hvbS3fER1qkWg3qR6gmNtlsgKVn8+0lNXjNkYV2G1ZaMdqSlIA==", null, false, 0m, "63d58cb1-a2cc-4800-9b3f-8bb3aa19b402", null, false, "SuperAdmin", "Admin", (byte)0, "Team 4" });
+                values: new object[] { 1L, 0, null, "e3a1cafd-868f-4e44-8c00-ba2df1c8881a", "admin@depi.com", false, false, null, "ADMIN@DEPI.COM", "SUPERADMIN", "AQAAAAIAAYagAAAAEKhs7MKdRQakXrvAWqZRx6+a0GQNDxoQuB+Mv+/0WyRYjQ3vQLfewmL41NvJFp+QKg==", null, false, 0m, "d0285726-7f8d-46dd-98a8-646680287c9c", null, false, "SuperAdmin", "Admin", (byte)0, "Team 4" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserClaims",
@@ -244,14 +242,14 @@ namespace DataAccess.Migrations
                 values: new object[] { 1L, 1L });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_DoctorId1",
+                name: "IX_Appointments_DoctorId",
                 table: "Appointments",
-                column: "DoctorId1");
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_PatientId1",
+                name: "IX_Appointments_PatientId",
                 table: "Appointments",
-                column: "PatientId1");
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

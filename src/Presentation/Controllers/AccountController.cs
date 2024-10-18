@@ -31,7 +31,7 @@ namespace Presentation.Controllers
             }
 
             var errors = await _service.SignUp(signUpViewModel);
-            if (errors == null || errors.Count() == 0)
+            if (errors != null && errors.Count() > 0)
             {
                 InjectErrors(errors);
             }

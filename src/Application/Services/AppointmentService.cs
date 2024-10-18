@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Shared.DTO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -33,16 +34,18 @@ namespace Application.Services
             return appointments_repository.GetAll().ToList();
         }
 
-        public List<Appointment> GetDoctortAppointments(int DoctorId)
+        public List<Appointment> GetDoctortAppointments(uint DoctorId)
         {
             return appointments_repository.GetAll().
                 Where(a => a.DoctorId == DoctorId).ToList();
         }
 
-        public List<Appointment> GetPatientAppointments(int PatientId)
+        public List<Appointment> GetPatientAppointments(uint PatientId)
         {
-            return appointments_repository.GetAll().
-                Where(a => a.PatientId == PatientId).ToList();
+            return appointments_repository.GetAll()
+                                          .Include(a => a.Patient)
+                                          .Where(a => a.PatientId == PatientId)
+                                          .ToList();
         }
 
         public bool RemoveAppointment(Appointment a)

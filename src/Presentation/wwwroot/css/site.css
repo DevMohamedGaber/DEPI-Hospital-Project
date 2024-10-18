@@ -81,7 +81,6 @@ html {
 }
 
 .content {
-    display: none;
     animation: fadeIn 0.5s;
 }
 
@@ -257,7 +256,6 @@ table td {
 }
 
 .content {
-    display: none;
     animation: fadeIn 0.5s;
 }
 
@@ -429,7 +427,7 @@ table td {
 }
 
 .content {
-    display: none;
+/*    display: none;*/
     animation: fadeIn 0.5s;
 }
 
@@ -600,7 +598,7 @@ table td {
 }
 
 .content {
-    display: none;
+/*    display: none;*/
     animation: fadeIn 0.5s;
 }
 
