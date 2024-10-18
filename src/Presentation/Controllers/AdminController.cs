@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Shared.DTO;
 using Shared.Enums;
 using System.Net;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Presentation.Controllers
 {
@@ -84,6 +85,16 @@ namespace Presentation.Controllers
             patients.UpdatePatient(model);
             return RedirectToAction("ViewPatient", new { id = model.Id });
         }
+
+        public IActionResult DeletePatient(uint id)
+        {
+            var isDeleted = patients.RemovePatient(id);
+            if(!isDeleted)
+            {
+                return RedirectToAction("ViewPatient", new {id = id});
+            }
+            return RedirectToAction("ViewPatients");
+        }
         #endregion
         #region Appointment
             public async Task<IActionResult> AddAppointment(int patientId)
@@ -98,6 +109,29 @@ namespace Presentation.Controllers
         {
             bool isAdded = appointments.AddAppointment(model);
             ModelState.AddModelError(string.Empty, isAdded ? "Added Successfully." : "Failed To Add new record.");
+            return RedirectToAction("ViewPatient", new { id = model.PatientId });
+        }
+
+        // Edit
+        public async Task<IActionResult> EditAppointment(uint id)
+        {
+            var appointment = appointments.GetById(id);
+            ViewBag.Doctors = await staff.GetAllDoctors();
+            return View(new EditAppointmentModelView
+            {
+                Id= id,
+                PatientId = appointment.PatientId,
+                DoctorId = appointment.DoctorId,
+                Date = appointment.Date,
+                Status = appointment.Status,
+                Type = appointment.Type
+            });
+
+        }
+        [HttpPost]
+        public IActionResult EditAppointment(EditAppointmentModelView model)
+        {
+            appointments.UpdateAppointment(model);
             return RedirectToAction("ViewPatient", new { id = model.PatientId });
         }
         #endregion

@@ -34,6 +34,11 @@ namespace Application.Services
             return appointments_repository.GetAll().ToList();
         }
 
+        public Appointment GetById(uint id)
+        {
+            return appointments_repository.GetAll().FirstOrDefault(a => a.Id == id);
+        }
+
         public List<Appointment> GetDoctortAppointments(uint DoctorId)
         {
             return appointments_repository.GetAll().
@@ -54,9 +59,17 @@ namespace Application.Services
             return true;
         }
 
-        public bool UpdateAppointment(Appointment a)
+        public bool UpdateAppointment(EditAppointmentModelView a)
         {
-            appointments_repository.Update(a);
+            appointments_repository.Update(new Appointment
+            {
+                Id = a.Id,
+                DoctorId = a.DoctorId,
+                PatientId = a.PatientId,
+                Date = a.Date,
+                Status = a.Status,
+                Type = a.Type
+            });
             return true;
         }
     }
