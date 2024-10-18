@@ -69,7 +69,7 @@ namespace Presentation.Controllers
         {
             bool isAdded = appointments.AddAppointment(model);
             ModelState.AddModelError(string.Empty, isAdded ? "Added Successfully." : "Failed To Add new record.");
-            return RedirectToAction("AddAppointment", new { patientId = model.PatientId });
+            return RedirectToAction("ViewPatient", new { id = model.PatientId });
         }
         #endregion
         #region Staff

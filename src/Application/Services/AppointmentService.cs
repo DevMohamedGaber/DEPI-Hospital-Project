@@ -43,7 +43,7 @@ namespace Application.Services
         public List<Appointment> GetPatientAppointments(uint PatientId)
         {
             return appointments_repository.GetAll()
-                                          .Include(a => a.Patient)
+                                          .Include(a => a.Doctor)
                                           .Where(a => a.PatientId == PatientId)
                                           .ToList();
         }

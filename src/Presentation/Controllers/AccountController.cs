@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces;
-using DataAccess.Entities;
 using Shared.DTO;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Presentation.Controllers
 {
