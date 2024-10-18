@@ -36,8 +36,8 @@ namespace Presentation.Controllers
             {
                 InjectErrors(errors);
             }
-
-            return View(signUpViewModel);
+            ModelState.AddModelError(string.Empty, "Added New Record Successfully.");
+            return RedirectToAction("SignUp");
         }
         #endregion
 
@@ -116,6 +116,12 @@ namespace Presentation.Controllers
         }
         #endregion
         
+        public async Task<IActionResult> Delete(uint id)
+        {
+           await _service.Delete(id);
+
+            return Redirect("/Admin");
+        }
         void InjectErrors(List<ErrorViewModel> errors)
         {
             foreach (var error in errors)

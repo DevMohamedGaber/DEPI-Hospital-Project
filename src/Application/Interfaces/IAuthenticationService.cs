@@ -15,5 +15,7 @@ namespace Application.Interfaces
         Task<Staff> GetById(uint id);
         Task<bool> Update(EditStaffViewModel model);
 
+        Task<bool> Delete(uint id);
+
     }
 }

@@ -148,5 +148,17 @@ namespace Application.Services
             await _userManager.UpdateAsync(user);
             return true;
         }
+
+        public async Task<bool> Delete(uint id)
+        {
+            var user = await GetById(id);
+            if (user == null)
+            {
+                return false;
+            }
+
+            await _userManager.DeleteAsync(user);
+            return true;
+        }
     }
 }
