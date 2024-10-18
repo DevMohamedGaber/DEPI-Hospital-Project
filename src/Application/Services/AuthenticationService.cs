@@ -119,5 +119,34 @@ namespace Application.Services
 
             return result;
         }
+
+        public async Task<Staff> GetById(uint id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            return user;
+        }
+        public async Task<bool> Update(EditStaffViewModel model)
+        {
+            var user = await GetById(model.Id);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.firstName = model.FirstName;
+            user.lastName = model.LastName;
+            user.Email = model.Email;
+            user.UserName = model.Username;
+            user.PhoneNumber = model.PhoneNumber;
+            user.Address = model.Address;
+            user.gender = model.Gender;
+            user.SocialNumber = model.SocialNumber;
+            user.Salary = model.Salary;
+
+            await _userManager.UpdateAsync(user);
+            return true;
+        }
     }
 }

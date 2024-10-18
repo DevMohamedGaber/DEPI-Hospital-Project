@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces;
 using Shared.DTO;
+using System.Net;
+using Shared.Enums;
 
 namespace Presentation.Controllers
 {
@@ -79,6 +81,40 @@ namespace Presentation.Controllers
         }
         #endregion
 
+        #region Edit
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var staff = await _service.GetById((uint)id);
+            
+            return View(new EditStaffViewModel
+            {
+                Id = staff.Id,
+                FirstName = staff.firstName,
+                LastName = staff.lastName,
+                Email = staff.Email,
+                Username = staff.UserName,
+                PhoneNumber = staff.PhoneNumber,
+                Address = staff.Address,
+                Gender = staff.gender.Value,
+                SocialNumber = staff.SocialNumber,
+                Salary = staff.Salary.Value
+            });
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditStaffViewModel model)
+        {
+            var done = await _service.Update(model);
+            if(done)
+            {
+                return Redirect("/Admin/ViewStaff");
+            }
+            ModelState.AddModelError(string.Empty, "Edit failed");
+            return View(model);
+        }
+        #endregion
         void InjectErrors(List<ErrorViewModel> errors)
         {
             foreach (var error in errors)

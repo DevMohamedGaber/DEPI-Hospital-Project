@@ -129,12 +129,6 @@ namespace Presentation.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult AddStaffMember(SignUpViewModel model)
-        {
-
-            return View();
-        }
         #endregion
     }
 }

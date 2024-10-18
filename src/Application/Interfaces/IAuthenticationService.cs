@@ -11,5 +11,9 @@ namespace Application.Interfaces
         Task SignOut();
         List<IdentityRole<uint>> GetAllRoles();
         Task<string> GetUserRole(Staff staff);
+
+        Task<Staff> GetById(uint id);
+        Task<bool> Update(EditStaffViewModel model);
+
     }
 }
